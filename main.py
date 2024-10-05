@@ -25,10 +25,8 @@ def main():
         match name[1]:
             case "command":
                 app.add_handler(CommandHandler(name[0], function))
-                print(name)
             case "messageTEXT":
                 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, function))
-                print(name)
                 
     app.add_error_handler(error)
 
