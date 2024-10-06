@@ -4,6 +4,7 @@ from geopy.geocoders import Nominatim
 
 import requests
 import re
+import extract_coordinates_from_maps_url
 
 def handle_response(text: str):
     text_ = text.split(" ")
@@ -17,8 +18,13 @@ def handle_response(text: str):
             coords = extract_coordinates_from_maps_url(get_final_url(text_[1]))
             print(get_final_url(text_[1]))
             return f"lat, lon = {coords[0]}, {coords[1]}"
+        case 'ecostress':
+            if len(text_) != 2:
+                return "Incorrect args :(, make sure you are not leaving two spaces between coors 'link'"
+            coords = extract_coordinates_from_maps_url(get_final_url(text_[1]))
+            image_url = extract_coordinates_from_maps_url.main(coords[0],coords[1])
+            return image_url  # Aquí retornamos la URL de la imagen para usarla en el bot
 
-    
     return "Respuesta generica"
 
 def extract_coordinates_from_maps_url(url):
@@ -89,5 +95,10 @@ async def handle_messageTEXT(update: Update, context: ContextTypes.DEFAULT_TYPE)
         response: str = handle_response(text)
         
     print('Bot: ', response)
-    await update.message.reply_text(response)
+
+    if response.startswith('http'):
+        await context.bot.send_photo(chat_id=update.message.chat.id, photo=response)
+    else:
+        await update.message.reply_text(response)
+    # await update.message.reply_text(response)
 
