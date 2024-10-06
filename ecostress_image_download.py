@@ -49,7 +49,7 @@ async def main(lat, lon):
 
         # Usar expresión regular para encontrar el patrón "ECOSTRESS_L2_LSTE_XXXXXXXX_XXXXXXXXXXXXX_XXXX_XX"
         pattern = r"ECOSTRESS_L2_LSTE_\d{5}_\d{3}_\d{8}T\d{6}_\d{4}_\d{2}"
-        text = "ECOSTRESS_L2_LSTE_35103_011_20240914T094818_0601_02.h5"
+        #text = "ECOSTRESS_L2_LSTE_35103_011_20240914T094818_0601_02.h5"
         match = re.search(pattern, text)
         print(match)
 
