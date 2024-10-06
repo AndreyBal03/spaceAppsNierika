@@ -4,7 +4,6 @@ from geopy.geocoders import Nominatim
 
 import requests
 import re
-import extract_coordinates_from_maps_url
 
 def handle_response(text: str):
     text_ = text.split(" ")
