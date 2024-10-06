@@ -17,16 +17,16 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     print("Starting bot ...")
+    print(TELEGRAM_TOKEN)
     app = Application.builder().token(TELEGRAM_TOKEN).build()
 
     for F in FEATURES:
         name = F[0].split("_")
         function = F[1]
-        match name[1]:
-            case "command":
-                app.add_handler(CommandHandler(name[0], function))
-            case "messageTEXT":
-                app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, function))
+        if name[1] == "command":
+            app.add_handler(CommandHandler(name[0], function))
+        if name[1] == "messageTEXT":
+            app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, function))
                 
     app.add_error_handler(error)
 
